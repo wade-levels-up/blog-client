@@ -18,7 +18,9 @@ const MainView = ({ posts, comments, viewingPost, updateViewingPost}) => {
                     <span><button>Add Comment</button></span>
                     <ul>
                         {comments.map((comment) => {
-                            return <Comment comment={comment} />
+                            if (comment.postId === viewingPost.id) {
+                                return <Comment comment={comment} />
+                            } 
                         })}
                     </ul>
                 </section>
