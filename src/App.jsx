@@ -1,7 +1,20 @@
 import { useState, useEffect } from 'react'
+import SignIn from './components/SignIn';
+import MainView from './components/MainView';
 
 function App() {
+  const [viewingPost, setViewingPost] = useState(null)
   const [posts, setPosts] = useState([])
+
+  function updateViewingPost(post) {
+    setViewingPost(post)
+  }
+
+  function setLocalStorage(key, value) {
+    localStorage.setItem(key, value)
+  }
+
+  console.table(viewingPost);
 
   useEffect(() => {
     fetch('http://localhost:3000/posts', {mode: 'cors'})
@@ -16,7 +29,7 @@ function App() {
     .then((data) => {
       setPosts(data.posts)
     })
-    .catch(error => console.log(error.message))
+    .catch(error => console.error(error.message))
   }, []);
 
   return (
@@ -24,16 +37,8 @@ function App() {
       <header>
         <h1>Blog Site</h1>
       </header>
-      <main>
-        <ul>
-          {posts.map((post) => {
-            return <li key={post.id}>
-                      <h2>{post.title}</h2>
-                      <p>{post.content}</p>
-                   </li>
-          })}
-        </ul>
-      </main>
+      <SignIn setLocalStorage={setLocalStorage} />
+      <MainView posts={posts} viewingPost={viewingPost} updateViewingPost={updateViewingPost} />
       <footer>
         Made by Wade
       </footer>
