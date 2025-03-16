@@ -7,6 +7,7 @@ function App() {
   const [signInStatus, setSignInStatus] = useState('logged out');
   const [viewingPost, setViewingPost] = useState(null)
   const [posts, setPosts] = useState([])
+  const [comments, setComments] = useState([]);
 
   function updateViewingPost(post) {
     setViewingPost(post)
@@ -59,6 +60,21 @@ function App() {
       setPosts(data.posts)
     })
     .catch(error => console.error(error.message))
+
+
+    fetch('http://localhost:3000/comments', {mode: 'cors'})
+    .then((response) => {
+      if (response.status >= 400) {
+        const error = new Error("Server Error");
+        error.status = response.status;
+        throw error;
+      }
+      return response.json();
+    })
+    .then((data) => {
+      setComments(data.comments)
+    })
+    .catch(error => console.error(error.message))
   }, []);
 
   return (
@@ -67,7 +83,7 @@ function App() {
         <h1>Biggus Blogus</h1>
       </header>
       <SignIn usernameData={username} setLocalStorage={setLocalStorage} viewSignUp={viewSignUp} signInStatus={signInStatus} logOut={logOut} logIn={logIn}/>
-      <MainView posts={posts} viewingPost={viewingPost} updateViewingPost={updateViewingPost} />
+      <MainView posts={posts} comments={comments} viewingPost={viewingPost} updateViewingPost={updateViewingPost} />
       <footer>
         Made by Wade
       </footer>

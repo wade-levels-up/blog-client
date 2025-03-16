@@ -1,8 +1,9 @@
 import React from "react";
 import BlogListItem from "./blogListItem";
+import Comment from "./Comment";
 import { format } from "date-fns";
 
-const MainView = ({ posts, viewingPost, updateViewingPost}) => {
+const MainView = ({ posts, comments, viewingPost, updateViewingPost}) => {
     return (
         <main>
             {viewingPost ? (
@@ -14,6 +15,12 @@ const MainView = ({ posts, viewingPost, updateViewingPost}) => {
                 </section>
                 <section>
                     <h3>Comments</h3>
+                    <span><button>Add Comment</button></span>
+                    <ul>
+                        {comments.map((comment) => {
+                            return <Comment comment={comment} />
+                        })}
+                    </ul>
                 </section>
                 </>
             ) : (
