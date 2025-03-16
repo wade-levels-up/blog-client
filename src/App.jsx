@@ -3,7 +3,8 @@ import SignIn from './components/SignIn';
 import MainView from './components/MainView';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [username, setUsername] = useState("");
+  const [signInStatus, setSignInStatus] = useState('logged out');
   const [viewingPost, setViewingPost] = useState(null)
   const [posts, setPosts] = useState([])
 
@@ -17,17 +18,27 @@ function App() {
 
   function logOut() {
     localStorage.removeItem("token");
-    setIsLoggedIn(false)
+    localStorage.removeItem("username");
+    setSignInStatus('logged out')
   }
 
-  function logIn() {
-    setIsLoggedIn(true)
+  function logIn(usernameData) {
+    setUsername(usernameData);
+    setSignInStatus('logged in')
+  }
+
+  function viewSignUp() {
+    setSignInStatus('signing up')
   }
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setIsLoggedIn(true);
+    const usernameData = localStorage.getItem("username");
+    const tokenData = localStorage.getItem("token");
+    if (tokenData) {
+      setSignInStatus('logged in')
+    }    
+    if (usernameData) {
+      setUsername(usernameData);
     }
 
     fetch('http://localhost:3000/posts', {mode: 'cors'})
@@ -48,9 +59,9 @@ function App() {
   return (
     <>
       <header>
-        <h1>Blog Site</h1>
+        <h1>Biggus Blogus</h1>
       </header>
-      <SignIn setLocalStorage={setLocalStorage} isLoggedIn={isLoggedIn} logOut={logOut} logIn={logIn}/>
+      <SignIn usernameData={username} setLocalStorage={setLocalStorage} viewSignUp={viewSignUp} signInStatus={signInStatus} logOut={logOut} logIn={logIn}/>
       <MainView posts={posts} viewingPost={viewingPost} updateViewingPost={updateViewingPost} />
       <footer>
         Made by Wade
