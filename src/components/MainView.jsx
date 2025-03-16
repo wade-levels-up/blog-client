@@ -1,15 +1,21 @@
 import React from "react";
 import BlogListItem from "./blogListItem";
+import { format } from "date-fns";
 
 const MainView = ({ posts, viewingPost, updateViewingPost}) => {
     return (
         <main>
             {viewingPost ? (
-                <section>
+                <>
+                 <section>
                     <h2>{viewingPost.title}</h2>
+                    <span><div>Written by {viewingPost.author}</div><div>{format(viewingPost.created, 'dd/M/yy')}</div><button onClick={() => updateViewingPost(null)}>Close</button></span>
                     <p>{viewingPost.content}</p>
-                    <button onClick={() => updateViewingPost(null)}>Close</button>
                 </section>
+                <section>
+                    <h3>Comments</h3>
+                </section>
+                </>
             ) : (
                 <ul>
                     {posts.map((post) => (

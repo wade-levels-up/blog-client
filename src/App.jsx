@@ -13,7 +13,11 @@ function App() {
   }
 
   function setLocalStorage(key, value) {
-    localStorage.setItem(key, value)
+    if (typeof value === "object") {
+      localStorage.setItem(key, JSON.stringify(value));
+    } else {
+      localStorage.setItem(key, value);
+    }
   }
 
   function logOut() {
@@ -32,13 +36,14 @@ function App() {
   }
 
   useEffect(() => {
-    const usernameData = localStorage.getItem("username");
+    const usernameData = localStorage.getItem("user");
     const tokenData = localStorage.getItem("token");
     if (tokenData) {
       setSignInStatus('logged in')
     }    
     if (usernameData) {
-      setUsername(usernameData);
+      const parsedUsernameData = JSON.parse(usernameData);
+      setUsername(parsedUsernameData.username);
     }
 
     fetch('http://localhost:3000/posts', {mode: 'cors'})

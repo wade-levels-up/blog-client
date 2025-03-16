@@ -31,8 +31,8 @@ const SignIn = ({signInStatus, usernameData, viewSignUp, setLocalStorage, logOut
                 }
             });
 
-            const userData = await userResponse.json()
-            setLocalStorage("username", userData.user.username);
+            const userData = await userResponse.json();
+            setLocalStorage("user", userData.user);
 
             logIn(userData.user.username);
         } else {
