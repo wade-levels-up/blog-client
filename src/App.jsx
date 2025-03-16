@@ -3,6 +3,7 @@ import SignIn from './components/SignIn';
 import MainView from './components/MainView';
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [viewingPost, setViewingPost] = useState(null)
   const [posts, setPosts] = useState([])
 
@@ -14,9 +15,21 @@ function App() {
     localStorage.setItem(key, value)
   }
 
-  console.table(viewingPost);
+  function logOut() {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false)
+  }
+
+  function logIn() {
+    setIsLoggedIn(true)
+  }
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsLoggedIn(true);
+    }
+
     fetch('http://localhost:3000/posts', {mode: 'cors'})
     .then((response) => {
       if (response.status >= 400) {
@@ -37,7 +50,7 @@ function App() {
       <header>
         <h1>Blog Site</h1>
       </header>
-      <SignIn setLocalStorage={setLocalStorage} />
+      <SignIn setLocalStorage={setLocalStorage} isLoggedIn={isLoggedIn} logOut={logOut} logIn={logIn}/>
       <MainView posts={posts} viewingPost={viewingPost} updateViewingPost={updateViewingPost} />
       <footer>
         Made by Wade
