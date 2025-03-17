@@ -1,6 +1,45 @@
 import React from "react";
+import styled from "styled-components";
 import { useState } from "react"
 
+const StyledSection = styled.section`
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    width: 100%;
+    align-items: left;
+    gap: 20px;
+
+    & ul {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+    }
+
+    & ul li {
+        display: flex;
+        gap: 12px;
+        justify-content: space-between;
+    }
+
+    & ul input {
+        font-size: 16px;
+        padding: 3px 9px;
+    }
+
+    & li span {
+        width: 100%;
+    }
+
+    & ul button {
+        width: 100%;
+    }
+
+    @media (min-width: 400px) {
+        flex-direction: row;
+        align-items: center;
+    }
+`
 
 const SignIn = ({signInStatus, usernameData, viewSignUp, setLocalStorage, logOut, logIn}) => {
     const [username, setUsername] = useState("");
@@ -60,27 +99,27 @@ const SignIn = ({signInStatus, usernameData, viewSignUp, setLocalStorage, logOut
 
     if (signInStatus === 'logged in') {
         return (
-            <section>
+            <StyledSection>
                 <h2>Hi {usernameData}</h2>
                 <button onClick={logOut}>Log out</button>
-            </section>
+            </StyledSection>
         );
     } else if (signInStatus === 'signing up') {
         return (
-            <section>
+            <StyledSection>
                 <h2>Sign Up</h2>
                 <form onSubmit={handleSubmitSignUp}>
                     <ul>
                         <li>
-                            <label htmlFor="username">Username:</label> 
+                            <label htmlFor="username">Username </label> 
                             <input type="text" id="username" name="username" value={username} onChange={(e) => setUsername(e.target.value)}/>
                         </li>
                         <li>
-                            <label htmlFor="password">Password:</label>
+                            <label htmlFor="password">Password </label>
                             <input type="password" id="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
                         </li>
                         <li>
-                            <label htmlFor="email">Email:</label>
+                            <label htmlFor="email">Email </label>
                             <input type="email" id="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
                         </li>
                         <li>
@@ -89,29 +128,31 @@ const SignIn = ({signInStatus, usernameData, viewSignUp, setLocalStorage, logOut
                     </ul>
                 </form>
                 <button onClick={logOut}>Back</button>
-            </section>
+            </StyledSection>
         )
     } else {
         return (
-            <section>
+            <StyledSection>
                 <h2>Sign In</h2>
                 <form onSubmit={handleSubmitLogin}>
                     <ul>
                         <li>
-                            <label htmlFor="username">Username:</label> 
+                            <label htmlFor="username">Username </label> 
                             <input type="text" id="username" name="username" value={username} onChange={(e) => setUsername(e.target.value)}/>
                         </li>
                         <li>
-                            <label htmlFor="password">Password:</label>
+                            <label htmlFor="password">Password </label>
                             <input type="password" id="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
                         </li>
                         <li>
                             <button type="submit">Submit</button>
                         </li>
+                        <li>
+                            <span>Not signed up? No worries! <button onClick={viewSignUp}>Sign Up</button></span>
+                        </li>
                     </ul>
                 </form>
-                <span>Not signed up? No worries! <button onClick={viewSignUp}>Click here to Sign Up</button></span>
-            </section>
+            </StyledSection>
         );
     }
 }

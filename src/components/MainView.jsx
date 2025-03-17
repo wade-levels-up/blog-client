@@ -1,8 +1,35 @@
 import React from "react";
 import { useState } from "react";
+import styled from "styled-components";
 import BlogListItem from "./blogListItem";
 import Comment from "./Comment";
 import { format } from "date-fns";
+
+const StyledMain = styled.main`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    padding: 20px;
+    border-top: 6px double aliceblue;
+
+    & .blog-posts-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    & .blog-posts-list {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        width: 100%;
+    }
+
+    & section {}
+`
 
 const MainView = ({ username, posts, comments, getComments, deleteComment, viewingPost, updateViewingPost}) => {
     const [content, setContent] = useState("");
@@ -28,7 +55,7 @@ const MainView = ({ username, posts, comments, getComments, deleteComment, viewi
     }
 
     return (
-        <main>
+        <StyledMain>
             {viewingPost ? (
                 <>
                  <section>
@@ -44,7 +71,7 @@ const MainView = ({ username, posts, comments, getComments, deleteComment, viewi
                             <ul>
                                 <li>
                                     <label htmlFor="content">Comment:</label>
-                                    <input type="text" id="content" name="content" value={content} onChange={(e) => setContent(e.target.value)}/>
+                                    <input type="text" id="content" name="content" onChange={(e) => setContent(e.target.value)}/>
                                 </li>
                                 <li>
                                     <button type="Submit">Submit</button>
@@ -64,13 +91,15 @@ const MainView = ({ username, posts, comments, getComments, deleteComment, viewi
                 </section>
                 </>
             ) : (
-                <ul>
-                    {posts.map((post) => (
-                        <BlogListItem key={post.id} post={post} updateViewingPost={updateViewingPost}/>
-                    ))}
-                </ul>
+                <section className="blog-posts-section">
+                    <ul className="blog-posts-list">
+                        {posts.map((post) => (
+                            <BlogListItem key={post.id} post={post} updateViewingPost={updateViewingPost}/>
+                        ))}
+                    </ul>
+                </section>
             )}
-        </main>
+        </StyledMain>
     );
 }
 

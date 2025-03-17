@@ -1,6 +1,22 @@
 import { useState, useEffect } from 'react'
+import styled from "styled-components";
 import SignIn from './components/SignIn';
 import MainView from './components/MainView';
+
+// Styled Components
+
+const StyledHeader = styled.header`
+  padding: 20px;
+
+  & h1 {
+    font-family: 'Big Shoulders Stencil';
+    font-size: 3rem;
+    font-weight: 900;
+    letter-spacing: 25px;
+  }
+`
+
+// Component
 
 function App() {
   const [username, setUsername] = useState("");
@@ -114,9 +130,9 @@ function App() {
 
   return (
     <>
-      <header>
-        <h1>Biggus Blogus</h1>
-      </header>
+      <StyledHeader>
+        <h1>Co.Blog</h1>
+      </StyledHeader>
       <SignIn usernameData={username} setLocalStorage={setLocalStorage} viewSignUp={viewSignUp} signInStatus={signInStatus} logOut={logOut} logIn={logIn}/>
       <MainView username={username} posts={posts} getComments={getComments} deleteComment={deleteComment} comments={comments} viewingPost={viewingPost} updateViewingPost={updateViewingPost} />
       <footer>
