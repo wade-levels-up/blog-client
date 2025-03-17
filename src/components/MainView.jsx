@@ -3,7 +3,7 @@ import BlogListItem from "./blogListItem";
 import Comment from "./Comment";
 import { format } from "date-fns";
 
-const MainView = ({ posts, comments, viewingPost, updateViewingPost}) => {
+const MainView = ({ username, posts, comments, deleteComment, viewingPost, updateViewingPost}) => {
     return (
         <main>
             {viewingPost ? (
@@ -19,7 +19,7 @@ const MainView = ({ posts, comments, viewingPost, updateViewingPost}) => {
                     <ul>
                         {comments.map((comment) => {
                             if (comment.postId === viewingPost.id) {
-                                return <Comment comment={comment} />
+                                return <Comment key={comment.id} username={username} comment={comment} deleteComment={deleteComment} />
                             } 
                         })}
                     </ul>

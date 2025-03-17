@@ -36,6 +36,17 @@ function App() {
     setSignInStatus('signing up')
   }
 
+  async function deleteComment(commentId) {
+    const data = localStorage.getItem("token");
+    await fetch(`http://localhost:3000/users/${username}/comments/${commentId}`, {
+      method: "DELETE",
+      headers: {
+          "Content-type": "application/json",
+          "Authorization": `Bearer ${data.token}`
+      }
+    })
+  }
+
   useEffect(() => {
     const usernameData = localStorage.getItem("user");
     const tokenData = localStorage.getItem("token");
@@ -83,7 +94,7 @@ function App() {
         <h1>Biggus Blogus</h1>
       </header>
       <SignIn usernameData={username} setLocalStorage={setLocalStorage} viewSignUp={viewSignUp} signInStatus={signInStatus} logOut={logOut} logIn={logIn}/>
-      <MainView posts={posts} comments={comments} viewingPost={viewingPost} updateViewingPost={updateViewingPost} />
+      <MainView username={username} posts={posts} deleteComment={deleteComment} comments={comments} viewingPost={viewingPost} updateViewingPost={updateViewingPost} />
       <footer>
         Made by Wade
       </footer>
