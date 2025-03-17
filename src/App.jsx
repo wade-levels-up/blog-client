@@ -37,14 +37,15 @@ function App() {
   }
 
   async function deleteComment(commentId) {
-    const data = localStorage.getItem("token");
+    console.log("Testing")
+    const token = localStorage.getItem("token");
     await fetch(`http://localhost:3000/users/${username}/comments/${commentId}`, {
       method: "DELETE",
       headers: {
           "Content-type": "application/json",
-          "Authorization": `Bearer ${data.token}`
+          "Authorization": `Bearer ${token}`
       }
-    })
+    });
   }
 
   useEffect(() => {
