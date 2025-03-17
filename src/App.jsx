@@ -37,7 +37,6 @@ function App() {
   }
 
   async function deleteComment(commentId) {
-    console.log("Testing")
     const token = localStorage.getItem("token");
     await fetch(`http://localhost:3000/users/${username}/comments/${commentId}`, {
       method: "DELETE",
@@ -46,6 +45,26 @@ function App() {
           "Authorization": `Bearer ${token}`
       }
     });
+    getComments();
+  }
+
+  async function getComments() {
+    fetch('http://localhost:3000/comments', {mode: 'cors'})
+    .then((response) => {
+      if (response.status >= 400) {
+        const error = new Error("Server Error");
+        error.status = response.status;
+        throw error;
+      }
+      return response.json();
+    })
+    .then((data) => {
+      setComments(data.comments)
+    })
+    .catch((error) => {
+      console.error(error.message)
+      setComments([])
+    })
   }
 
   useEffect(() => {
@@ -86,7 +105,10 @@ function App() {
     .then((data) => {
       setComments(data.comments)
     })
-    .catch(error => console.error(error.message))
+    .catch((error) => {
+      console.error(error.message)
+      setComments([])
+    })
   }, []);
 
   return (
