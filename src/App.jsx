@@ -24,6 +24,7 @@ function App() {
   function logOut() {
     localStorage.removeItem("token");
     localStorage.removeItem("username");
+    setUsername("");
     setSignInStatus('logged out')
   }
 
@@ -44,7 +45,7 @@ function App() {
           "Content-type": "application/json",
           "Authorization": `Bearer ${token}`
       }
-    });
+    }).catch(error => console.error(error));
     getComments();
   }
 
@@ -117,7 +118,7 @@ function App() {
         <h1>Biggus Blogus</h1>
       </header>
       <SignIn usernameData={username} setLocalStorage={setLocalStorage} viewSignUp={viewSignUp} signInStatus={signInStatus} logOut={logOut} logIn={logIn}/>
-      <MainView username={username} posts={posts} deleteComment={deleteComment} comments={comments} viewingPost={viewingPost} updateViewingPost={updateViewingPost} />
+      <MainView username={username} posts={posts} getComments={getComments} deleteComment={deleteComment} comments={comments} viewingPost={viewingPost} updateViewingPost={updateViewingPost} />
       <footer>
         Made by Wade
       </footer>
