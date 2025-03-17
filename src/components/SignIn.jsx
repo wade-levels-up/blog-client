@@ -22,22 +22,20 @@ const StyledSection = styled.section`
         justify-content: space-between;
     }
 
-    & ul input {
-        font-size: 16px;
-        padding: 3px 9px;
-    }
-
-    & li span {
-        width: 100%;
-    }
-
     & ul button {
         width: 100%;
     }
 
-    @media (min-width: 400px) {
+    @media (min-width: 850px) {
         flex-direction: row;
         align-items: center;
+
+        & ul {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: center;
+        }
     }
 `
 
@@ -148,7 +146,7 @@ const SignIn = ({signInStatus, usernameData, viewSignUp, setLocalStorage, logOut
                             <button type="submit">Submit</button>
                         </li>
                         <li>
-                            <span>Not signed up? No worries! <button onClick={viewSignUp}>Sign Up</button></span>
+                            <button onClick={viewSignUp}>Sign Up</button>
                         </li>
                     </ul>
                 </form>

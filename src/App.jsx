@@ -10,10 +10,28 @@ const StyledHeader = styled.header`
 
   & h1 {
     font-family: 'Big Shoulders Stencil';
-    font-size: 3rem;
+    font-size: 2.6rem;
     font-weight: 900;
     letter-spacing: 25px;
+    width: 100%;
   }
+
+  & i {
+    display: none;
+  }
+
+  @media (min-width: 450px) {
+    & i {
+      display: inline-block;
+    }
+  }
+`
+
+const StyledFooter = styled.footer`
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  padding: 12px;
 `
 
 // Component
@@ -131,13 +149,14 @@ function App() {
   return (
     <>
       <StyledHeader>
-        <h1>Co.Blog</h1>
+        <h1>Co.Blog<i className="fa-solid fa-pencil"></i></h1>
       </StyledHeader>
+      <hr />
       <SignIn usernameData={username} setLocalStorage={setLocalStorage} viewSignUp={viewSignUp} signInStatus={signInStatus} logOut={logOut} logIn={logIn}/>
       <MainView username={username} posts={posts} getComments={getComments} deleteComment={deleteComment} comments={comments} viewingPost={viewingPost} updateViewingPost={updateViewingPost} />
-      <footer>
+      <StyledFooter>
         Made by Wade
-      </footer>
+      </StyledFooter>
     </>
   )
 }
