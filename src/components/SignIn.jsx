@@ -26,7 +26,7 @@ const StyledSection = styled.section`
         width: 100%;
     }
 
-    @media (min-width: 850px) {
+    @media (min-width: 1100px) {
         flex-direction: row;
         align-items: center;
 
@@ -39,7 +39,7 @@ const StyledSection = styled.section`
     }
 `
 
-const SignIn = ({signInStatus, usernameData, viewSignUp, setLocalStorage, logOut, logIn}) => {
+const SignIn = ({signInStatus, usernameData, viewSignUp, setLocalStorage, logOut, logIn, updateViewingPost}) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
@@ -99,7 +99,8 @@ const SignIn = ({signInStatus, usernameData, viewSignUp, setLocalStorage, logOut
         return (
             <StyledSection>
                 <h2>Hi {usernameData}</h2>
-                <button onClick={logOut}>Log out</button>
+                <button title="View All Posts" onClick={() => updateViewingPost(null)}><i className="fa-solid fa-eye"></i> All Posts</button>
+                <button onClick={logOut}><i className="fa-solid fa-right-from-bracket"></i> Log Out</button>
             </StyledSection>
         );
     } else if (signInStatus === 'signing up') {
@@ -123,9 +124,11 @@ const SignIn = ({signInStatus, usernameData, viewSignUp, setLocalStorage, logOut
                         <li>
                             <button type="submit">Submit</button>
                         </li>
+                        <li>
+                            <button onClick={logOut}>Back</button>
+                        </li>
                     </ul>
                 </form>
-                <button onClick={logOut}>Back</button>
             </StyledSection>
         )
     } else {
@@ -150,6 +153,7 @@ const SignIn = ({signInStatus, usernameData, viewSignUp, setLocalStorage, logOut
                         </li>
                     </ul>
                 </form>
+                <button title="View All Posts" onClick={() => updateViewingPost(null)}><i className="fa-solid fa-eye"></i> All Posts</button>
             </StyledSection>
         );
     }

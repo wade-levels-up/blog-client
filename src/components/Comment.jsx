@@ -18,6 +18,7 @@ const StyledLi = styled.li`
 
     & p {
         max-width: 100%;
+        word-break: break-all;
         text-wrap: pretty;
         hyphens: auto;
     }

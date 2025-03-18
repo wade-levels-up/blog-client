@@ -14,6 +14,18 @@ const StyledMain = styled.main`
     border-top: 2px ridge slategray;
     border-bottom: 2px ridge slategray;
 
+    & h2 {
+        font-size: 2rem;
+    }
+
+    & textarea {
+        width: 100%;
+        font-size: 16px;
+        padding: 3px 9px;
+        margin-bottom: 6px;
+        resize: vertical;
+    }
+
     & .blog-posts-section {
         display: flex;
         flex-direction: column;
@@ -28,8 +40,6 @@ const StyledMain = styled.main`
         gap: 20px;
         width: 100%;
     }
-
-    & section {}
 
     & .comment-form {
         display: flex;
@@ -59,7 +69,6 @@ const StyledMain = styled.main`
     }
 
     & .post-content {
-        max-width: 65ch;
         text-wrap: pretty;
     }
 
@@ -75,8 +84,19 @@ const StyledMain = styled.main`
     }
 
     & .main-child-section {
-        width: 80%;
-        max-width: 1000px;
+        width: 100%;
+        max-width: 55ch;
+    }
+
+    @media (min-width: 850px) {
+        & h2 {
+            font-size: 2.5rem;
+        }
+
+        & .blog-posts-list {
+            display: grid;
+            grid-template-columns: repeat( auto-fit, minmax(450px, 1fr));
+        }
     }
 `
 
@@ -122,19 +142,19 @@ const MainView = ({ username, posts, comments, getComments, deleteComment, viewi
                 <>
                  <section className="main-child-section">
                     <h2>{viewingPost.title}</h2>
-                    <span className="post-menu" ><div>By {viewingPost.author}</div><button onClick={() => updateViewingPost(null)}>Close Article</button></span>
+                    <span className="post-menu" ><div>By {viewingPost.author}</div></span>
                     <p className="post-content">{viewingPost.content}</p>
                 </section>
                 <hr />
                 <section className="main-child-section">
-                    <h3>{viewingPostCommentCount} Comments</h3>
+                    <h3>{viewingPostCommentCount} Comment/s</h3>
                     {username ? (
                         <form className="comment-form" onSubmit={handleSubmitComment}>
                             <span>Leave a comment on this post</span>
                             <ul>
                                 <li>
-                                    <label htmlFor="content">Comment </label>
-                                    <input type="text" id="content" name="content" value={content} onChange={(e) => setContent(e.target.value)}/>
+                                    <label hidden htmlFor="content">Comment </label>
+                                    <textarea id="content" name="content" rows={3} value={content} onChange={(e) => setContent(e.target.value)} maxLength={300}/>
                                 </li>
                                 <li>
                                     <button type="Submit">Submit</button>

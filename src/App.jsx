@@ -11,11 +11,12 @@ const StyledHeader = styled.header`
 
   & h1 {
     font-family: 'Big Shoulders Stencil';
-    font-size: 2.6rem;
+    font-size: 2.5rem;
     font-weight: 900;
     letter-spacing: 25px;
     width: 100%;
   }
+
 
   & i {
     display: none;
@@ -169,7 +170,7 @@ function App() {
         <h1>Co.Blog<i className="fa-solid fa-pencil"></i></h1>
       </StyledHeader>
       <hr />
-      <SignIn usernameData={username} setLocalStorage={setLocalStorage} viewSignUp={viewSignUp} signInStatus={signInStatus} logOut={logOut} logIn={logIn}/>
+      <SignIn usernameData={username} setLocalStorage={setLocalStorage} viewSignUp={viewSignUp} signInStatus={signInStatus} logOut={logOut} logIn={logIn} updateViewingPost={updateViewingPost}/>
       <MainView username={username} posts={posts} getComments={getComments} deleteComment={deleteComment} comments={comments} viewingPost={viewingPost} updateViewingPost={updateViewingPost} />
       <StyledFooter>
         Made by Wade
