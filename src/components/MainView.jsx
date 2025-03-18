@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import BlogListItem from "./blogListItem";
 import Comment from "./Comment";
@@ -81,7 +81,8 @@ const StyledMain = styled.main`
 `
 
 const MainView = ({ username, posts, comments, getComments, deleteComment, viewingPost, updateViewingPost}) => {
-    const [content, setContent] = useState("");
+    const [content, setContent] = useState('');
+    const [viewingPostCommentCount, setViewingPostCommentCount] = useState(0);
 
     async function handleSubmitComment(event) {
         event.preventDefault();
@@ -96,12 +97,24 @@ const MainView = ({ username, posts, comments, getComments, deleteComment, viewi
             body: JSON.stringify({ content }),
         });
 
+        setContent('');
+
         if (response.ok) {
             getComments();
         } else {
             console.error("Add comment failed");
         }
     }
+
+    useEffect(() => {
+        let postComments = 0;
+        comments.forEach((comment) => {
+            if (viewingPost && (comment.postId === viewingPost.id)) {
+                postComments = postComments + 1;
+            }
+        })
+        setViewingPostCommentCount(postComments)
+    }, [comments, viewingPost])
 
     return (
         <StyledMain>
@@ -114,14 +127,14 @@ const MainView = ({ username, posts, comments, getComments, deleteComment, viewi
                 </section>
                 <hr />
                 <section className="main-child-section">
-                    <h3>Comments</h3>
+                    <h3>{viewingPostCommentCount} Comments</h3>
                     {username ? (
                         <form className="comment-form" onSubmit={handleSubmitComment}>
                             <span>Leave a comment on this post</span>
                             <ul>
                                 <li>
                                     <label htmlFor="content">Comment </label>
-                                    <input type="text" id="content" name="content" onChange={(e) => setContent(e.target.value)}/>
+                                    <input type="text" id="content" name="content" value={content} onChange={(e) => setContent(e.target.value)}/>
                                 </li>
                                 <li>
                                     <button type="Submit">Submit</button>
@@ -144,7 +157,7 @@ const MainView = ({ username, posts, comments, getComments, deleteComment, viewi
                 <section className="blog-posts-section">
                     <ul className="blog-posts-list">
                         {posts.map((post) => (
-                            <BlogListItem key={post.id} post={post} updateViewingPost={updateViewingPost}/>
+                            <BlogListItem key={post.id} post={post} updateViewingPost={updateViewingPost} comments={comments}/>
                         ))}
                     </ul>
                 </section>

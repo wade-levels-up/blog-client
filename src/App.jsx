@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { jwtDecode } from 'jwt-decode';
 import styled from "styled-components";
 import SignIn from './components/SignIn';
 import MainView from './components/MainView';
@@ -57,7 +58,7 @@ function App() {
 
   function logOut() {
     localStorage.removeItem("token");
-    localStorage.removeItem("username");
+    localStorage.removeItem("user");
     setUsername("");
     setSignInStatus('logged out')
   }
@@ -102,15 +103,31 @@ function App() {
     })
   }
 
+  function isTokenExpired(token) {
+    try {
+      const decoded = jwtDecode(token);
+      const currentTime = Date.now() / 1000;
+      return decoded.exp < currentTime;
+    } catch(error) {
+      console.error(error);
+      return true;
+    }
+  }
+
   useEffect(() => {
     const usernameData = localStorage.getItem("user");
     const tokenData = localStorage.getItem("token");
-    if (tokenData) {
-      setSignInStatus('logged in')
-    }    
-    if (usernameData) {
-      const parsedUsernameData = JSON.parse(usernameData);
-      setUsername(parsedUsernameData.username);
+
+    if (tokenData && isTokenExpired(tokenData)) {
+      logOut();
+    } else {
+      if (tokenData) {
+        setSignInStatus('logged in');
+      }
+      if (usernameData) {
+        const parsedUsernameData = JSON.parse(usernameData);
+        setUsername(parsedUsernameData.username)
+      }
     }
 
     fetch('http://localhost:3000/posts', {mode: 'cors'})
