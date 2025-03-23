@@ -75,6 +75,7 @@ const StyledMain = styled.main`
 
     & .post-content {
         text-wrap: pretty;
+        white-space: pre-wrap;
     }
 
     & .post-content::first-letter {
