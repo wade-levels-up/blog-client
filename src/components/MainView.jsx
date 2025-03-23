@@ -61,6 +61,11 @@ const StyledMain = styled.main`
         width: 100%;
     }
 
+    & .comments-list {
+        display: flex;
+        flex-direction: column;
+    }
+
     & .post-menu {
         display: flex;
         padding: 3px;
@@ -78,10 +83,6 @@ const StyledMain = styled.main`
         letter-spacing: 1px;
     }
 
-    & .comments-list {
-        display: flex;
-        flex-direction: column;
-    }
 
     & .main-child-section {
         width: 100%;
