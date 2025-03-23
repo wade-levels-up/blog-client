@@ -43,6 +43,7 @@ const SignIn = ({signInStatus, usernameData, viewSignUp, setLocalStorage, logOut
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
+    const [error, setError] = useState("");
 
     async function handleSubmitLogin(event) {
         event.preventDefault();
@@ -71,9 +72,12 @@ const SignIn = ({signInStatus, usernameData, viewSignUp, setLocalStorage, logOut
             const userData = await userResponse.json();
             setLocalStorage("user", userData.user);
 
+            setError("");
             logIn(userData.user.username);
         } else {
-            console.error("Login failed");
+            const errorData = await response.json()
+            setError(`Login failed: ${errorData.message}`);
+            console.error(`Login failed: ${errorData.message}`);
         }
     }
 
@@ -89,9 +93,12 @@ const SignIn = ({signInStatus, usernameData, viewSignUp, setLocalStorage, logOut
         });
 
         if (response.ok) {
+            setError("")
             logOut();
         } else {
-            console.error("Login failed");
+            const errorData = await response.json();
+            setError(`Sign-Up failed: ${errorData.message}`);
+            console.error(`Sign-Up failed: ${errorData.message}`);
         }
     }
 
@@ -111,24 +118,25 @@ const SignIn = ({signInStatus, usernameData, viewSignUp, setLocalStorage, logOut
                     <ul>
                         <li>
                             <label htmlFor="username">Username </label> 
-                            <input type="text" id="username" name="username" value={username} onChange={(e) => setUsername(e.target.value)}/>
+                            <input type="text" id="username" name="username" value={username} onChange={(e) => setUsername(e.target.value)} required/>
                         </li>
                         <li>
                             <label htmlFor="password">Password </label>
-                            <input type="password" id="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                            <input type="password" id="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
                         </li>
                         <li>
                             <label htmlFor="email">Email </label>
-                            <input type="email" id="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+                            <input type="email" id="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} required/>
                         </li>
                         <li>
                             <button type="submit">Submit</button>
                         </li>
                         <li>
-                            <button onClick={logOut}>Back</button>
+                            <button onClick={(e) => {e.preventDefault(); setError(""); logOut()}}>Back</button>
                         </li>
                     </ul>
                 </form>
+                {error ? <p>{error}</p> : <p></p>}
             </StyledSection>
         )
     } else {
@@ -139,20 +147,21 @@ const SignIn = ({signInStatus, usernameData, viewSignUp, setLocalStorage, logOut
                     <ul>
                         <li>
                             <label htmlFor="username">Username </label> 
-                            <input type="text" id="username" name="username" value={username} onChange={(e) => setUsername(e.target.value)}/>
+                            <input type="text" id="username" name="username" value={username} onChange={(e) => setUsername(e.target.value)} required/>
                         </li>
                         <li>
                             <label htmlFor="password">Password </label>
-                            <input type="password" id="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                            <input type="password" id="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
                         </li>
                         <li>
                             <button type="submit">Submit</button>
                         </li>
                         <li>
-                            <button onClick={viewSignUp}>Sign Up</button>
+                            <button onClick={(e) => {e.preventDefault(); setError(""); viewSignUp()}}>Sign Up</button>
                         </li>
                     </ul>
                 </form>
+                {error ? <p>{error}</p> : <p></p>}
                 <button title="View All Posts" onClick={() => updateViewingPost(null)}><i className="fa-solid fa-eye"></i> All Posts</button>
             </StyledSection>
         );
