@@ -156,7 +156,7 @@ const MainView = ({ username, posts, comments, getComments, deleteComment, viewi
                             <ul>
                                 <li>
                                     <label hidden htmlFor="content">Comment </label>
-                                    <textarea id="content" name="content" rows={3} value={content} onChange={(e) => setContent(e.target.value)} maxLength={300}/>
+                                    <textarea id="content" name="content" rows={3} value={content} onChange={(e) => setContent(e.target.value)} maxLength={1000} required/>
                                 </li>
                                 <li>
                                     <button type="Submit">Submit</button>

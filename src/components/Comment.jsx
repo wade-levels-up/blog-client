@@ -99,7 +99,7 @@ const Comment = ({username, comment, getComments, deleteComment}) => {
             (<form onSubmit={handleEditSubmit}>
                 <label hidden htmlFor="content"></label>
                 <div>
-                    <textarea id="content" name="content" value={content} onChange={(e) => setContent(e.target.value)} />
+                    <textarea id="content" name="content" value={content} onChange={(e) => setContent(e.target.value)} required maxLength={1000}/>
                     <button>Save</button>
                 </div>
             </form>)}
