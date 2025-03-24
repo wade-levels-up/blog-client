@@ -145,6 +145,7 @@ const MainView = ({ username, posts, comments, getComments, deleteComment, viewi
                 postComments = postComments + 1;
             }
         })
+        setError("");
         setViewingPostCommentCount(postComments)
     }, [comments, viewingPost])
 
