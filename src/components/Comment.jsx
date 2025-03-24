@@ -54,16 +54,26 @@ const StyledLi = styled.li`
         font-size: 16px;
         box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.5);
     }
+
+    & .error {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        word-break: break-word;
+        white-space: normal;
+    }
 `
 
 const Comment = ({username, comment, getComments, deleteComment}) => {
     const [content, setContent] = useState(comment.content);
     const [beingEdited, setBeingEdited] = useState(false)
+    const [error, setError] = useState("");
 
     function handleEditComment() {
         if (beingEdited === false) {
             setBeingEdited(true)
         } else {
+            setError("")
+            setContent(comment.content)
             setBeingEdited(false)
         }
     }
@@ -72,16 +82,24 @@ const Comment = ({username, comment, getComments, deleteComment}) => {
         event.preventDefault();
         const token = localStorage.getItem("token");
 
-        await fetch(`http://localhost:3000/users/${username}/comments/${comment.id}`, {
+        const response = await fetch(`http://localhost:3000/users/${username}/comments/${comment.id}`, {
             method: "PUT",
             headers: {
                 "Content-type": "application/json",
                 "Authorization": `Bearer ${token}`
             },
             body: JSON.stringify({ content }),
-        }).catch(error => console.error(error));
-        setBeingEdited(false);
-        getComments()
+        });
+
+        if (response.ok) {
+            setError("")
+            getComments();
+            setBeingEdited(false);
+        } else {
+            const errorData = await response.json();
+            setError(`Editing comment failed: ${errorData.message}`);
+            console.error(`Editing comment failed: ${errorData.message}`);
+        }
     }
     
     return (
@@ -103,6 +121,7 @@ const Comment = ({username, comment, getComments, deleteComment}) => {
                     <button>Save</button>
                 </div>
             </form>)}
+            {error ? <p className="error">{error}</p> : <p></p>}
         </StyledLi>
     )
 }

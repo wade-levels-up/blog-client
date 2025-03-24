@@ -90,6 +90,13 @@ const StyledMain = styled.main`
         max-width: 55ch;
     }
 
+    & .error {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        word-break: break-word;
+        white-space: normal;
+    }
+
     @media (min-width: 850px) {
         & h2 {
             font-size: 2.5rem;
@@ -105,6 +112,7 @@ const StyledMain = styled.main`
 const MainView = ({ username, posts, comments, getComments, deleteComment, viewingPost, updateViewingPost}) => {
     const [content, setContent] = useState('');
     const [viewingPostCommentCount, setViewingPostCommentCount] = useState(0);
+    const [error, setError] = useState("")
 
     async function handleSubmitComment(event) {
         event.preventDefault();
@@ -119,12 +127,14 @@ const MainView = ({ username, posts, comments, getComments, deleteComment, viewi
             body: JSON.stringify({ content }),
         });
 
-        setContent('');
-
         if (response.ok) {
+            setContent("");
+            setError("")
             getComments();
         } else {
-            console.error("Add comment failed");
+            const errorData = await response.json();
+            setError(`Add comment failed: ${errorData.message}`);
+            console.error(`Add comment failed: ${errorData.message}`);
         }
     }
 
@@ -162,6 +172,7 @@ const MainView = ({ username, posts, comments, getComments, deleteComment, viewi
                                     <button type="Submit">Submit</button>
                                 </li>
                             </ul>
+                            {error ? <p className="error">{error}</p> : <p></p>}
                         </form>
                     ) : (
                         <span>Thinking of sharing your thoughts? Log in to post comments</span>              
