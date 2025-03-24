@@ -82,7 +82,7 @@ const Comment = ({username, comment, getComments, deleteComment}) => {
         event.preventDefault();
         const token = localStorage.getItem("token");
 
-        const response = await fetch(`http://blog-api-production-fb7a.up.railway.app/users/${username}/comments/${comment.id}`, {
+        const response = await fetch(`https://blog-api-production-346d.up.railway.app/users/${username}/comments/${comment.id}`, {
             method: "PUT",
             headers: {
                 "Content-type": "application/json",

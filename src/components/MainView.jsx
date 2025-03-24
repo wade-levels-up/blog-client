@@ -118,7 +118,7 @@ const MainView = ({ username, posts, comments, getComments, deleteComment, viewi
         event.preventDefault();
         const token = localStorage.getItem("token");
 
-        const response = await fetch(`http://blog-api-production-fb7a.up.railway.app/posts/${viewingPost.id}/comments`, {
+        const response = await fetch(`https://blog-api-production-346d.up.railway.app/posts/${viewingPost.id}/comments`, {
             method: "POST",
             headers: {
                 "Content-type": "application/json",
