@@ -48,7 +48,7 @@ const SignIn = ({signInStatus, usernameData, viewSignUp, setLocalStorage, logOut
     async function handleSubmitLogin(event) {
         event.preventDefault();
 
-        const response = await fetch("https://blog-api-production-346d.up.railway.app/login", {
+        const response = await fetch(`https://blog-api-production-346d.up.railway.app/login`, {
             method: "POST",
             headers: {
                 "Content-type": "application/json",
@@ -84,7 +84,7 @@ const SignIn = ({signInStatus, usernameData, viewSignUp, setLocalStorage, logOut
     async function handleSubmitSignUp(event) {
         event.preventDefault();
 
-        const response = await fetch("https://blog-api-production-346d.up.railway.app/users", {
+        const response = await fetch(`https://blog-api-production-346d.up.railway.app/users`, {
             method: "POST",
             headers: {
                 "Content-type": "application/json",

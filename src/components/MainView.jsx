@@ -87,7 +87,7 @@ const StyledMain = styled.main`
 
     & .main-child-section {
         width: 100%;
-        max-width: 55ch;
+        max-width: 70ch;
     }
 
     & .error {

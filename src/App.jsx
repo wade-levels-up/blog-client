@@ -86,7 +86,7 @@ function App() {
   }
 
   async function getComments() {
-    fetch('https://blog-api-production-346d.up.railway.app/comments', {mode: 'cors'})
+    fetch(`https://blog-api-production-346d.up.railway.app/comments`, {mode: 'cors'})
     .then((response) => {
       if (response.status >= 400) {
         const error = new Error("Server Error");
@@ -131,7 +131,7 @@ function App() {
       }
     }
 
-    fetch('https://blog-api-production-346d.up.railway.app/posts', {mode: 'cors'})
+    fetch(`https://blog-api-production-346d.up.railway.app/posts`, {mode: 'cors'})
     .then((response) => {
       if (response.status >= 400) {
         const error = new Error("Server Error");
@@ -146,7 +146,7 @@ function App() {
     .catch(error => console.error(error.message))
 
 
-    fetch('https://blog-api-production-346d.up.railway.app/comments', {mode: 'cors'})
+    fetch(`https://blog-api-production-346d.up.railway.app/comments`, {mode: 'cors'})
     .then((response) => {
       if (response.status >= 400) {
         const error = new Error("Server Error");

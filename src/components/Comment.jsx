@@ -18,9 +18,10 @@ const StyledLi = styled.li`
 
     & p {
         max-width: 100%;
-        word-break: break-all;
-        text-wrap: pretty;
-        hyphens: auto;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        word-break: break-word;
+        white-space: normal;
     }
 
     & span div:nth-child(2) {
