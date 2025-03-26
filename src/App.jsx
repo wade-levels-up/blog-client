@@ -6,6 +6,15 @@ import MainView from './components/MainView';
 
 // Styled Components
 
+const StyledLoader = styled.main`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    padding-top: 32px;
+    width: 100%;
+`
+
 const StyledHeader = styled.header`
   padding: 20px;
 
@@ -16,7 +25,6 @@ const StyledHeader = styled.header`
     letter-spacing: 25px;
     width: 100%;
   }
-
 
   & i {
     display: none;
@@ -44,6 +52,7 @@ function App() {
   const [viewingPost, setViewingPost] = useState(null)
   const [posts, setPosts] = useState([])
   const [comments, setComments] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   function updateViewingPost(post) {
     setViewingPost(post)
@@ -133,6 +142,7 @@ function App() {
 
     fetch(`https://blog-api-production-346d.up.railway.app/posts`, {mode: 'cors'})
     .then((response) => {
+      setLoading(true);
       if (response.status >= 400) {
         const error = new Error("Server Error");
         error.status = response.status;
@@ -142,8 +152,12 @@ function App() {
     })
     .then((data) => {
       setPosts(data.posts)
+      setLoading(false);
     })
-    .catch(error => console.error(error.message))
+    .catch((error) => {
+      console.error(error.message);
+      setLoading(false);
+    })
 
 
     fetch(`https://blog-api-production-346d.up.railway.app/comments`, {mode: 'cors'})
@@ -171,7 +185,14 @@ function App() {
       </StyledHeader>
       <hr />
       <SignIn usernameData={username} setLocalStorage={setLocalStorage} viewSignUp={viewSignUp} signInStatus={signInStatus} logOut={logOut} logIn={logIn} updateViewingPost={updateViewingPost}/>
-      <MainView username={username} posts={posts} getComments={getComments} deleteComment={deleteComment} comments={comments} viewingPost={viewingPost} updateViewingPost={updateViewingPost} />
+      {loading ? (
+        <StyledLoader id='loading'>
+          <i className="fa-solid fa-spinner fa-spin-pulse fa-2xl"></i>
+          <p>Loading Posts...</p>
+        </StyledLoader>
+      ) : (
+        <MainView username={username} posts={posts} getComments={getComments} deleteComment={deleteComment} comments={comments} viewingPost={viewingPost} updateViewingPost={updateViewingPost} />
+      )}
       <StyledFooter>
         Made by Wade
       </StyledFooter>
