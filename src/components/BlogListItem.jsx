@@ -11,9 +11,22 @@ const StyledBlogListItem = styled.li`
    height: 100%;
    max-width: 650px;
    cursor: pointer;
+   animation-name: fade-in;
+   animation-duration: 1s;
+   animation-timing-function: ease-in;
+   animation-iteration-count: 1;
+
+   @keyframes fade-in {
+    from {
+      opacity: 0%;
+    }
+    to {
+      opacity: 100%;
+    }
+  }
 
    &:hover {
-    filter: drop-shadow(5px 3px 2px black);
+    box-shadow: 5px 3px 2px black;
    }
 
    & h2 {
