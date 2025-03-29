@@ -85,9 +85,7 @@ function App() {
   async function deleteComment(commentId) {
     const token = localStorage.getItem("token");
     await fetch(
-      `${
-        import.meta.env.VITE_LOCAL_API
-      }/users/${username}/comments/${commentId}`,
+      `https://blog-proxy-production.up.railway.app/users/${username}/comments/${commentId}`,
       {
         method: "DELETE",
         headers: {
