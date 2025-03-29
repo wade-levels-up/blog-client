@@ -99,7 +99,7 @@ const Comment = ({ username, comment, getComments, deleteComment, index }) => {
     const token = localStorage.getItem("token");
 
     const response = await fetch(
-      `https://blog-api-production-346d.up.railway.app/users/${username}/comments/${
+      `${import.meta.env.VITE_PROXY}/users/${username}/comments/${
         comment.id
       }`,
       {
