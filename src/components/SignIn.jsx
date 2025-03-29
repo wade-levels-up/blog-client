@@ -26,15 +26,19 @@ const StyledSection = styled.section`
     width: 100%;
   }
 
-  & .passwordInputContainer, .usernameInputContainer {
+  & .passwordInputContainer{
     display: flex;
     align-items: center;
     position: relative;
-    width: 188px;
+    width: 200px;
+  }
+
+  & input {
+    width: 200px;
   }
 
   & input[id="password"] {
-    width: 100%;
+    width: 100%
   }
 
   & button[title="Toggle Password Visibility"] {
@@ -162,17 +166,15 @@ const SignIn = ({
           <ul>
             <li>
               <label htmlFor="username">Username </label>
-              <div className="usernameInputContainer">
-                <input
-                  type="text"
-                  id="username"
-                  name="username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  required
-                  maxLength={30}
-                />
-              </div>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+                maxLength={30}
+              />
             </li>
             <li>
               <label htmlFor="password">Password </label>
