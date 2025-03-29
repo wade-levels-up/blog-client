@@ -27,6 +27,13 @@ const StyledMain = styled.main`
     resize: vertical;
   }
 
+  & .postBannerImage {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 300px;
+  }
+
   & .blog-posts-section {
     display: flex;
     flex-direction: column;
@@ -166,6 +173,7 @@ const MainView = ({
         <>
           <section className="main-child-section">
             <h2>{viewingPost.title}</h2>
+            {viewingPost.image ? (<div className="postBannerImage" style={{backgroundImage: `url(${viewingPost.image})`}}></div>) : (<div></div>)}
             <span className="post-menu">
               <div>By {viewingPost.author}</div>
             </span>

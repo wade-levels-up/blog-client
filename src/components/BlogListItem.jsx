@@ -39,6 +39,14 @@ const StyledBlogListItem = styled.li`
     gap: 18px;
    }
 
+   & .imageDiv {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-color: slategray;
+    height: 200px;
+   }
+
    & .summary {
     background-color: slategray;
     padding: 8px;
@@ -86,6 +94,7 @@ const BlogListItem = ({post, updateViewingPost, comments}) => {
     return   <StyledBlogListItem onClick={() => updateViewingPost(post)}>
                 <h2>{post.title}</h2>
                 <p className="date">{format(post.created, 'PPPP')}</p>
+                {post.image ? ( <div className="imageDiv" style={{backgroundImage: `url(${post.image})`}}></div> ) : ( <div></div> )}
                 <p className="summary">{post.summary}</p>
                 <span>
                     <div>By {post.author}</div>
