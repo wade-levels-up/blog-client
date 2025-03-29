@@ -26,7 +26,7 @@ const StyledSection = styled.section`
     width: 100%;
   }
 
-  & .passwordInputContainer {
+  & .passwordInputContainer, .usernameInputContainer {
     display: flex;
     align-items: center;
     position: relative;
@@ -162,15 +162,17 @@ const SignIn = ({
           <ul>
             <li>
               <label htmlFor="username">Username </label>
-              <input
-                type="text"
-                id="username"
-                name="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                required
-                maxLength={30}
-              />
+              <div className="usernameInputContainer">
+                <input
+                  type="text"
+                  id="username"
+                  name="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                  maxLength={30}
+                />
+              </div>
             </li>
             <li>
               <label htmlFor="password">Password </label>
