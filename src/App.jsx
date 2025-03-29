@@ -100,7 +100,7 @@ function App() {
   }
 
   async function getComments() {
-    fetch(`${import.meta.env.VITE_PROXY}/comments`, { mode: "cors" })
+    fetch(`https://blog-proxy-production.up.railway.app/app/comments`, { mode: "cors" })
       .then((response) => {
         if (response.status >= 400) {
           const error = new Error("Server Error");
@@ -145,7 +145,7 @@ function App() {
       }
     }
 
-    fetch(`${import.meta.env.VITE_PROXY}/posts`, { mode: "cors" })
+    fetch(`https://blog-proxy-production.up.railway.app/app/posts`, { mode: "cors" })
       .then((response) => {
         setLoading(true);
         if (response.status >= 400) {
@@ -164,7 +164,7 @@ function App() {
         setLoading(false);
       });
 
-    fetch(`${import.meta.env.VITE_PROXY}/comments`, { mode: "cors" })
+    fetch(`https://blog-proxy-production.up.railway.app/app/comments`, { mode: "cors" })
       .then((response) => {
         if (response.status >= 400) {
           const error = new Error("Server Error");

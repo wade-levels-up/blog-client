@@ -127,7 +127,7 @@ const MainView = ({
     const token = localStorage.getItem("token");
 
     const response = await fetch(
-      `${import.meta.env.VITE_PROXY}/posts/${viewingPost.id}/comments`,
+      `https://blog-proxy-production.up.railway.app/app/posts/${viewingPost.id}/comments`,
       {
         method: "POST",
         headers: {
