@@ -1,7 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { format } from "date-fns";
 import { useState } from "react";
+import { PostContext } from "../App";
 
 const StyledBlogListItem = styled.li`
    display: flex;
@@ -30,6 +32,7 @@ const StyledBlogListItem = styled.li`
    }
 
    & h2 {
+    font-size: 2rem;
     flex: 1;
     padding: 12px 8px;
     background-color: slategray;
@@ -78,7 +81,9 @@ const StyledBlogListItem = styled.li`
    }
 `
 
-const BlogListItem = ({post, updateViewingPost, comments}) => {
+const BlogListItem = ({post}) => {
+    const navigate = useNavigate()
+    const { comments } = useContext(PostContext);
     const [commentCount, setCommentCount] = useState(0);
 
     useEffect(() => {
@@ -91,10 +96,10 @@ const BlogListItem = ({post, updateViewingPost, comments}) => {
         setCommentCount(postComments)
     }, [comments, post.id])
 
-    return   <StyledBlogListItem onClick={() => updateViewingPost(post)}>
+    return   <StyledBlogListItem onClick={() => navigate(`posts/${post.id}`)}>
                 <h2>{post.title}</h2>
                 <p className="date">{format(post.created, 'PPPP')}</p>
-                {post.image ? ( <div className="imageDiv" style={{backgroundImage: `url(${post.image})`}}></div> ) : ( <div></div> )}
+                {post.image ? ( <div className="imageDiv" style={{backgroundImage: `url(${post.image})`}}></div> ) : ( <div style={{flex: "1", backgroundColor: "slategray"}}></div> )}
                 <p className="summary">{post.summary}</p>
                 <span>
                     <div>By {post.author}</div>

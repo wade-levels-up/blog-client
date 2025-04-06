@@ -1,8 +1,21 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, createContext } from "react";
 import { jwtDecode } from "jwt-decode";
 import styled from "styled-components";
 import SignIn from "./components/SignIn";
 import MainView from "./components/MainView";
+import BlogPost from "./components/BlogPost";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <MainView />
+  },
+  {
+    path: "/posts/:postid",
+    element: <BlogPost />
+  }
+]);
 
 // Styled Components
 
@@ -43,6 +56,16 @@ const StyledFooter = styled.footer`
   justify-content: flex-end;
   padding: 12px;
 `;
+
+export const PostContext = createContext({
+  username: "",
+  posts: [],
+  comments: [],
+  getComments: () => {},
+  deleteComment: () => {},
+  viewingPost: {},
+  updateViewingPost: () => {}
+})
 
 // Component
 
@@ -85,7 +108,7 @@ function App() {
   async function deleteComment(commentId) {
     const token = localStorage.getItem("token");
     await fetch(
-      `https://blog-proxy-production.up.railway.app/app/users/${username}/comments/${commentId}`,
+      `http://localhost:3000/users/${username}/comments/${commentId}`,
       {
         method: "DELETE",
         headers: {
@@ -98,7 +121,7 @@ function App() {
   }
 
   async function getComments() {
-    fetch(`https://blog-proxy-production.up.railway.app/app/comments`, { mode: "cors" })
+    fetch(`http://localhost:3000/comments`, { mode: "cors" })
       .then((response) => {
         if (response.status >= 400) {
           const error = new Error("Server Error");
@@ -143,7 +166,7 @@ function App() {
       }
     }
 
-    fetch(`https://blog-proxy-production.up.railway.app/app/posts`, { mode: "cors" })
+    fetch(`http://localhost:3000/posts`, { mode: "cors" })
       .then((response) => {
         setLoading(true);
         if (response.status >= 400) {
@@ -162,7 +185,7 @@ function App() {
         setLoading(false);
       });
 
-    fetch(`https://blog-proxy-production.up.railway.app/app/comments`, { mode: "cors" })
+    fetch(`http://localhost:3000/comments`, { mode: "cors" })
       .then((response) => {
         if (response.status >= 400) {
           const error = new Error("Server Error");
@@ -180,41 +203,34 @@ function App() {
       });
   }, []);
 
+  
   return (
-    <>
-      <StyledHeader>
-        <h1>
-          Co.Blog<i className="fa-solid fa-pencil"></i>
-        </h1>
-      </StyledHeader>
-      <hr />
-      <SignIn
-        usernameData={username}
-        setLocalStorage={setLocalStorage}
-        viewSignUp={viewSignUp}
-        signInStatus={signInStatus}
-        logOut={logOut}
-        logIn={logIn}
-        updateViewingPost={updateViewingPost}
-      />
-      {loading ? (
-        <StyledLoader id="loading">
-          <i className="fa-solid fa-spinner fa-spin-pulse fa-2xl"></i>
-          <p>Loading Posts...</p>
-        </StyledLoader>
-      ) : (
-        <MainView
-          username={username}
-          posts={posts}
-          getComments={getComments}
-          deleteComment={deleteComment}
-          comments={comments}
-          viewingPost={viewingPost}
+      <PostContext.Provider value={{username, posts, comments, getComments, deleteComment, viewingPost, updateViewingPost}}>
+        <StyledHeader>
+          <h1>
+            Co.Blog<i className="fa-solid fa-pencil"></i>
+          </h1>
+        </StyledHeader>
+        <hr />
+        <SignIn
+          usernameData={username}
+          setLocalStorage={setLocalStorage}
+          viewSignUp={viewSignUp}
+          signInStatus={signInStatus}
+          logOut={logOut}
+          logIn={logIn}
           updateViewingPost={updateViewingPost}
         />
-      )}
-      <StyledFooter>Made by Wade</StyledFooter>
-    </>
+        {loading ? (
+          <StyledLoader id="loading">
+            <i className="fa-solid fa-spinner fa-spin-pulse fa-2xl"></i>
+            <p>Loading Posts...</p>
+          </StyledLoader>
+        ) : (
+          <RouterProvider router={router}/>
+        )}
+        <StyledFooter><a style={{textDecoration: "none", color: "black"}} href="https://github.com/wade-levels-up" target="blank"><i class="fa-brands fa-square-github fa-2xl"></i> Made by Wade</a></StyledFooter>
+      </PostContext.Provider>
   );
 }
 

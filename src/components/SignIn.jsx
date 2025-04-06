@@ -22,7 +22,7 @@ const StyledSection = styled.section`
     justify-content: space-between;
   }
 
-  & ul button {
+  & ul button, ul .linkButton {
     width: 100%;
   }
 
@@ -71,7 +71,6 @@ const SignIn = ({
   setLocalStorage,
   logOut,
   logIn,
-  updateViewingPost,
 }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -82,7 +81,7 @@ const SignIn = ({
   async function handleSubmitLogin(event) {
     event.preventDefault();
 
-    const response = await fetch(`https://blog-proxy-production.up.railway.app/app/login`, {
+    const response = await fetch(`http://localhost:3000/login`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -95,7 +94,7 @@ const SignIn = ({
       setLocalStorage("token", data.token);
 
       const userResponse = await fetch(
-        `https://blog-proxy-production.up.railway.app/app/users/${username}`,
+        `http://localhost:3000/users/${username}`,
         {
           method: "GET",
           headers: {
@@ -120,7 +119,7 @@ const SignIn = ({
   async function handleSubmitSignUp(event) {
     event.preventDefault();
 
-    const response = await fetch(`https://blog-proxy-production.up.railway.app/app/users`, {
+    const response = await fetch(`http://localhost:3000/users`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -150,9 +149,7 @@ const SignIn = ({
     return (
       <StyledSection>
         <h2>Hi {usernameData}</h2>
-        <button title="View All Posts" onClick={() => updateViewingPost(null)}>
-          <i className="fa-solid fa-eye"></i> All Posts
-        </button>
+        <a className="linkButton" title="View All Posts" href="/"><i className="fa-solid fa-eye"></i> All Posts</a>
         <button onClick={logOut}>
           <i className="fa-solid fa-right-from-bracket"></i> Log Out
         </button>
@@ -236,7 +233,7 @@ const SignIn = ({
     );
   } else {
     return (
-      <StyledSection>
+      <StyledSection id="SignIn">
         <h2>Sign In</h2>
         <form onSubmit={handleSubmitLogin}>
           <ul>
@@ -295,9 +292,7 @@ const SignIn = ({
           </ul>
         </form>
         {error ? <p>{error}</p> : <p></p>}
-        <button title="View All Posts" onClick={() => updateViewingPost(null)}>
-          <i className="fa-solid fa-eye"></i> All Posts
-        </button>
+          <a className="linkButton" title="View All Posts" href="/"><i className="fa-solid fa-eye"></i> All Posts</a>
       </StyledSection>
     );
   }

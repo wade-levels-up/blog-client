@@ -99,7 +99,7 @@ const Comment = ({ username, comment, getComments, deleteComment, index }) => {
     const token = localStorage.getItem("token");
 
     const response = await fetch(
-      `https://blog-proxy-production.up.railway.app/app/users/${username}/comments/${
+      `http://localhost:3000/users/${username}/comments/${
         comment.id
       }`,
       {
