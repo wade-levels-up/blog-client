@@ -108,7 +108,7 @@ function App() {
   async function deleteComment(commentId) {
     const token = localStorage.getItem("token");
     await fetch(
-      `http://localhost:3000/users/${username}/comments/${commentId}`,
+      `https://blog-proxy-production.up.railway.app/app/users/${username}/comments/${commentId}`,
       {
         method: "DELETE",
         headers: {
@@ -121,7 +121,7 @@ function App() {
   }
 
   async function getComments() {
-    fetch(`http://localhost:3000/comments`, { mode: "cors" })
+    fetch(`https://blog-proxy-production.up.railway.app/app/comments`, { mode: "cors" })
       .then((response) => {
         if (response.status >= 400) {
           const error = new Error("Server Error");
@@ -166,7 +166,7 @@ function App() {
       }
     }
 
-    fetch(`http://localhost:3000/posts`, { mode: "cors" })
+    fetch(`https://blog-proxy-production.up.railway.app/app/posts`, { mode: "cors" })
       .then((response) => {
         setLoading(true);
         if (response.status >= 400) {
@@ -185,7 +185,7 @@ function App() {
         setLoading(false);
       });
 
-    fetch(`http://localhost:3000/comments`, { mode: "cors" })
+    fetch(`https://blog-proxy-production.up.railway.app/app/comments`, { mode: "cors" })
       .then((response) => {
         if (response.status >= 400) {
           const error = new Error("Server Error");

@@ -132,7 +132,7 @@ const BlogPost = () => {
     const token = localStorage.getItem("token");
 
     const response = await fetch(
-      `http://localhost:3000/posts/${postid}/comments`,
+      `https://blog-proxy-production.up.railway.app/app/posts/${postid}/comments`,
       {
         method: "POST",
         headers: {
